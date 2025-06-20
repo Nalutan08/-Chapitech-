@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz HTML/CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="quiz.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>Quiz HTML & CSS</h1>
+    <div id="timer">⏱️ Temps restant : <span id="time">60</span> sec</div>
+    <div id="question-container">
+      <p id="question">Chargement...</p>
+      <div id="answers"></div>
+    </div>
+    <div id="result" class="hidden"></div>
+    <button id="restart" class="hidden" onclick="startQuiz()">Recommencer</button>
+  </div>
+  <nav><h2><a href="accueil.html">Accueil</a></h2></nav>
+  <script>
+  const questions = [
+  {
+    question: "Que signifie HTML ?",
+    answers: ["Hyperlinks and Text Markup Language", "Hyper Text Markup Language", "Home Tool Markup Language", "High Text Markup Level"],
+    correct: 1
+  },
+  {
+    question: "Quelle balise crée un lien hypertexte ?",
+    answers: ["<link>", "<a>", "<href>", "<url>"],
+    correct: 1
+  },
+  {
+    question: "Quel attribut CSS change la couleur du texte ?",
+    answers: ["font-color", "text-color", "color", "background-color"],
+    correct: 2
+  },
+  {
+    question: "Quelle propriété centre un élément en Flexbox ?",
+    answers: ["align-items: center;", "justify-content: center;", "text-align: center;", "margin: auto;"],
+    correct: 1
+  },
+  {
+    question: "Quel fichier contient le style d'une page ?",
+    answers: ["index.html", "script.js", "style.css", "app.php"],
+    correct: 2
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 60;
+let timerInterval;
+
+function startQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  timeLeft = 60;
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("restart").classList.add("hidden");
+  document.getElementById("question-container").classList.remove("hidden");
+  showQuestion();
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  document.getElementById("time").textContent = timeLeft;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("time").textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      showResult();
+    }
+  }, 1000);
+}
+
+function showQuestion() {
+  if (currentQuestion >= questions.length) {
+    clearInterval(timerInterval);
+    showResult();
+    return;
+  }
+
+  const q = questions[currentQuestion];
+  document.getElementById("question").textContent = q.question;
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  q.answers.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = answer;
+    btn.onclick = () => checkAnswer(index);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(selected) {
+  if (selected === questions[currentQuestion].correct) {
+    score++;
+  }
+  currentQuestion++;
+  showQuestion();
+}
+
+function showResult() {
+  document.getElementById("question-container").classList.add("hidden");
+  const resultText = `⏳ Temps écoulé !<br>Votre score : ${score} / ${questions.length}`;
+  document.getElementById("result").innerHTML = resultText;
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("restart").classList.remove("hidden");
+}
+
+window.addEventListener("DOMContentLoaded", startQuiz);
+</script>
+</body>
+</html>

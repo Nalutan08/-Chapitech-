@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A propoos de</title>
+    <link rel="stylesheet" href="style.css">
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">🌙 Mode Sombre</button>
+    <div id="notification" class="notification">🌙 Mode sombre activé !</div>    <button class="toggle-textsize" onclick="toggleTextSize()">🔠 Taille du texte</button>
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <p style="text-align: center;"><img src="Logo.webp" alt="logo"></p>        <h3>{Chapitech}</h3>
+        <nav>
+        <h2><a href="accueil.html">Accueil</a></h2>
+        <h2><a href="connexion.html">Connexion</a></h2>
+        </nav>
+    </header>
+    <h1>A propos de</h1>
+    <p>Biographie de Céline De Freitas Martins – Créatrice de la e-boutique {Chapitech}
+    <br>Céline De Freitas Martins, entrepreneure française passionnée de mode et de design, est la fondatrice de {Chapitech}, une e-boutique spécialisée dans la vente de chapeaux et de lunettes au style raffiné et original.
+    <br>Diplômée en design de mode à l'École Duperré à Paris, Céline a d'abord travaillé pendant plusieurs années dans le prêt-à-porter haut de gamme. Au fil du temps, elle développe un goût particulier pour les accessoires, qu'elle considère comme les véritables signatures d’un style personnel.
+    <br>C’est lors d’un voyage en Italie, en visitant des artisans chapeliers à Florence, que Céline trouve l'inspiration pour son propre projet. Elle réalise qu’il existe peu de boutiques en ligne alliant élégance, qualité artisanale et accessibilité dans le domaine des chapeaux et des lunettes.
+    <br>Animée par l’envie de rendre ces accessoires uniques accessibles à tous, Céline lance sa e-boutique en 2025. {Chapitech} propose des collections soigneusement sélectionnées, mêlant créations artisanales, matériaux durables et design contemporain.
+    <br>Sa motivation principale : offrir à chacun la possibilité de s'exprimer par le regard — qu’il soit souligné par une monture audacieuse ou mis en valeur par un chapeau bien choisi. Grâce à sa plateforme, Céline souhaite aussi mettre en lumière le savoir-faire d’artisans européens trop souvent méconnus.
+    <br>Son credo : <em> "Un bon accessoire n’est pas un détail. C’est ce qui révèle qui vous êtes."</em>
+    </p>
+    <footer>
+        <h2>Ce site a été fait dans le cadre de l’ISEGCOM Code Camp</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/TgGto2RgDeQ?si=uacyzDbp407wzJe8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h2>Liens externes</h2>
+        <a href="C:\Users\Céline\Documents\ISCC-HTML\hello-world.html">hello-world</a>
+        <br><a href="https://fr.linkedin.com/in/alexandre-de-freitas-martins/en?trk=people-guest_people_search-card">Alexandre De Freitas Martins</a>
+    </footer>
+<script>
+    // Appliquer le mode sombre si déjà activé
+    if (localStorage.getItem('dark-mode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // Appliquer la taille de texte si déjà agrandie
+    if (localStorage.getItem('large-text') === 'true') {
+        document.body.classList.add('large-text');
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', isDark);
+        showNotification(isDark ? '🌙 Mode sombre activé !' : '☀️ Mode clair activé !');
+    }
+
+    function toggleTextSize() {
+        document.body.classList.toggle('large-text');
+        const isLarge = document.body.classList.contains('large-text');
+        localStorage.setItem('large-text', isLarge);
+        showNotification(isLarge ? '🔠 Texte agrandi !' : '🔡 Texte normal !');
+    }
+
+    function showNotification(message) {
+        const notif = document.getElementById('notification');
+        notif.textContent = message;
+        notif.classList.add('show');
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+    }
+</script>
+<script>
+  window.onscroll = function() {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("progress-bar").style.width = scrolled + "%";
+  };
+</script>
+</body>
+</html>

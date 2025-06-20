@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lunette de soleil 80€</title>
+    <link rel="stylesheet" href="style.css">
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">🌙 Mode Sombre</button>
+    <div id="notification" class="notification">🌙 Mode sombre activé !</div>
+    <button class="toggle-textsize" onclick="toggleTextSize()">🔠 Taille du texte</button>
+    <button id="cart-toggle" class="cart-button">🛒 Panier</button>
+    <div id="cart" class="cart hidden">
+        <h4>🛒 Votre panier</h4>
+        <ul id="cart-items"></ul>
+        <p id="cart-total">Total : 0€</p>
+        <button onclick="closeCart()">Fermer</button>
+    </div>
+    <div id="progress-container">
+    <div id="progress-bar"></div>
+    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <p style="text-align: center;"><img src="Logo.webp" alt="logo"></p>        <h3>{Chapitech}</h3>
+        <nav>
+            <h2><a href="accueil.html">Accueil</a></h2></li>
+            <h2><a href="connexion.html">Connexion</a></h2>
+            <h2><a href="apropos.html">A Propos de</a></h2>
+        </nav>
+    </header>
+    <img src="MARC_JACOBS_748_S_RHL_NOIR_OPTICAL_AIRLINES_2.webp" alt="">
+    <h4>Lunette de soleil</h4>
+    <p>Pour avoir la classe en été</p>
+    <h4>80€</h4>
+    <button onclick="addToCart('Lunette de soleil', 80)">🛍️ Acheter</button>
+
+    <footer>
+        <h2>Ce site a été fait dans le cadre de l’ISEGCOM Code Camp</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/TgGto2RgDeQ?si=uacyzDbp407wzJe8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h2>Liens externes</h2>
+        <a href="C:\Users\Céline\Documents\ISCC-HTML\hello-world.html">hello-world</a>
+        <br><a href="https://fr.linkedin.com/in/alexandre-de-freitas-martins/en?trk=people-guest_people_search-card">Alexandre De Freitas Martins</a>
+    </footer>
+<script>
+    // Appliquer le mode sombre si déjà activé
+    if (localStorage.getItem('dark-mode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // Appliquer la taille de texte si déjà agrandie
+    if (localStorage.getItem('large-text') === 'true') {
+        document.body.classList.add('large-text');
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', isDark);
+        showNotification(isDark ? '🌙 Mode sombre activé !' : '☀️ Mode clair activé !');
+    }
+
+    function toggleTextSize() {
+        document.body.classList.toggle('large-text');
+        const isLarge = document.body.classList.contains('large-text');
+        localStorage.setItem('large-text', isLarge);
+        showNotification(isLarge ? '🔠 Texte agrandi !' : '🔡 Texte normal !');
+    }
+
+    function showNotification(message) {
+        const notif = document.getElementById('notification');
+        notif.textContent = message;
+        notif.classList.add('show');
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+    }
+</script>
+<script>
+    // Charger panier depuis localStorage
+    let cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    updateCart();
+
+    // Boutons
+    document.getElementById('cart-toggle').addEventListener('click', () => {
+        document.getElementById('cart').classList.toggle('hidden');
+    });
+
+    function closeCart() {
+        document.getElementById('cart').classList.add('hidden');
+    }
+
+    function addToCart(name, price) {
+        cartItems.push({ name, price });
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCart();
+        showNotification(`🛒 ${name} ajouté au panier !`);
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart-items');
+        const totalText = document.getElementById('cart-total');
+        cartList.innerHTML = '';
+        let total = 0;
+
+        cartItems.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${item.name} - ${item.price}€
+                <button onclick="removeFromCart(${index})" style="margin-left: 10px; color: red; background: none; border: none; cursor: pointer;">❌</button>
+            `;
+            cartList.appendChild(li);
+            total += item.price;
+        });
+
+        totalText.textContent = `Total : ${total}€`;
+    }
+    function removeFromCart(index) {
+        cartItems.splice(index, 1); // Supprime 1 élément à l’index donné
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCart();
+        showNotification('🗑️ Article retiré du panier.');
+    }
+</script>
+<script>
+  window.onscroll = function() {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("progress-bar").style.width = scrolled + "%";
+  };
+</script>
+</body>
+</html>
