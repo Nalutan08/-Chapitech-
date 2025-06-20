@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chapitech</title>
+    <link rel="stylesheet" href="style.css">
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">🌙 Mode Sombre</button>
+    <div id="notification" class="notification">🌙 Mode sombre activé !</div>
+    <button class="toggle-textsize" onclick="toggleTextSize()">🔠 Taille du texte</button>
+    <button id="cart-toggle" class="cart-button">🛒 Panier</button>
+    <div id="cart" class="cart hidden">
+        <h4>🛒 Votre panier</h4>
+        <ul id="cart-items"></ul>
+        <p id="cart-total">Total : 0€</p>
+        <button onclick="closeCart()">Fermer</button>
+    </div>
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <p>Ce site utilise des cookies pour améliorer votre expérience. 🍪</p>
+        <button onclick="acceptCookies()">Accepter</button>
+        <button onclick="refuseCookies()">Refuser</button>
+    </div>
+        <div id="progress-container">
+    <div id="progress-bar"></div>
+    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <h1>Accueil Chapitech</h1>
+        <p style="text-align: center;"><img src="Logo.webp" alt="logo"></p>
+        <h3>{Chapitech}</h3>
+        <nav>
+        <h2><a href="connexion.html">Connexion</a></h2>
+        <h2><a href="apropos.html">A Propos de</a></h2>
+        <h2><a href="quiz.html">Quiz</a></h2>
+        </nav>
+    </header>
+    <p>Bienvenue chez Chapitech ! <br> <strong>Vous trouverez sur cette page tous les produits que je mets en vente aujourd’hui ! </strong></p>
+    <h2>Liste des articles</h2>
+    <h2>Les articles actuellement disponibles :</h2>
+<section class="product-grid">
+    <div class="product-card">
+        <a href="lunette-de-soleil.html">
+        <img src="MARC_JACOBS_748_S_RHL_NOIR_OPTICAL_AIRLINES_2.webp" alt="Lunette de soleil">
+        <h3>Lunette de soleil</h3>
+        </a>
+        <p>Prix : 80€</p>
+        <button onclick="addToCart('Lunette de soleil', 80)">🛍️ Acheter</button>
+    </div>
+    <div class="product-card">
+        <a href="casquette.html">
+            <img src="casquette-baseball-classic-6-panel-cap-a-personnaliser-MB6118-navy-apercu.webp" alt="Casquette">
+            <h3>Casquette</h3>
+        </a>
+        <p>Prix : 180€</p>
+        <button onclick="addToCart('Casquette Premium', 180)">🛍️ Acheter</button>
+    </div>
+    <div class="product-card">
+        <a href="chapeau.html">
+        <img src="16039_606c58e8877f3_BLACK.png" alt="Chapeau">
+        <h3>Chapeau</h3>
+        </a>
+        <p>Prix : 65€</p>
+        <button onclick="addToCart('Chapeau', 65)">🛍️ Acheter</button>
+    </div>
+    <div class="product-card">
+        <a href="bob.html">
+        <img src="louis-vuitton-chapeau-monogram-essential--M78772_PM1_Back view.webp" alt="Bob">
+        <h3>Bob</h3>
+        </a>
+        <p>Prix : 45€</p>
+        <button onclick="addToCart('Bob', 45)">🛍️ Acheter</button>
+    </div>
+    <div class="product-card">
+        <a href="lunette-de-vue.html">
+        <img src="monture-ikks-ik1535-fille-col-i006.png" alt="Lunette de vue">
+        <h3>Lunette de vue</h3>
+        </a>
+        <p>Prix : 120€</p>
+        <button onclick="addToCart('Lunette de vue', 120)">🛍️ Acheter</button>
+    </div>
+</section>
+   <h2>Avis</h2>
+    <p><q>J’achète tous mes produits sur cette boutique depuis quelques mois, et j’avoue que je suis impressionné par la qualité du service et des produits reçus. <em>Pierre. </em></q></p>
+    <p><q>Je suis ravie de recevoir des articles d’aussi belle qualité à chaque achat ! <em>Catherine.</em></q></p>
+    <footer>
+        <h2>Ce site a été fait dans le cadre de l’ISEGCOM Code Camp</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/TgGto2RgDeQ?si=uacyzDbp407wzJe8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h2>Liens externes</h2>
+        <a href="C:\Users\Céline\Documents\ISCC-HTML\hello-world.html">hello-world</a>
+        <br><a href="https://fr.linkedin.com/in/alexandre-de-freitas-martins/en?trk=people-guest_people_search-card">Alexandre De Freitas Martins</a>
+    </footer>
+<script>
+    // Mode sombre (déjà présent)
+    if (localStorage.getItem('dark-mode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // Texte large (déjà présent)
+    if (localStorage.getItem('large-text') === 'true') {
+        document.body.classList.add('large-text');
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', isDark);
+        showNotification(isDark ? '🌙 Mode sombre activé !' : '☀️ Mode clair activé !');
+    }
+
+    function toggleTextSize() {
+        document.body.classList.toggle('large-text');
+        const isLarge = document.body.classList.contains('large-text');
+        localStorage.setItem('large-text', isLarge);
+        showNotification(isLarge ? '🔠 Texte agrandi !' : '🔡 Texte normal !');
+    }
+
+    function showNotification(message) {
+        const notif = document.getElementById('notification');
+        notif.textContent = message;
+        notif.classList.add('show');
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+    }
+</script>
+<script>
+    // Charger panier depuis localStorage
+// Récupère depuis cookie ou localStorage
+    let cartItems = [];
+
+    try {
+        const cookieCart = getCookie('cart');
+        if (cookieCart) {
+            cartItems = JSON.parse(cookieCart);
+        } else {
+            cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        }
+    } catch (e) {
+        cartItems = [];
+    }
+
+    updateCart();
+
+    // Boutons
+    document.getElementById('cart-toggle').addEventListener('click', () => {
+        document.getElementById('cart').classList.toggle('hidden');
+    });
+
+    function closeCart() {
+        document.getElementById('cart').classList.add('hidden');
+    }
+    function saveCart() {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        setCookie('cart', JSON.stringify(cartItems), 7); // expire dans 7 jours
+    }
+
+
+    function addToCart(name, price) {
+        cartItems.push({ name, price });
+        saveCart();
+        updateCart();
+        showNotification(`🛒 ${name} ajouté au panier !`);
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart-items');
+        const totalText = document.getElementById('cart-total');
+        cartList.innerHTML = '';
+        let total = 0;
+
+        cartItems.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${item.name} - ${item.price}€
+                <button onclick="removeFromCart(${index})" style="margin-left: 10px; color: red; background: none; border: none; cursor: pointer;">❌</button>
+            `;
+            cartList.appendChild(li);
+            total += item.price;
+        });
+
+        totalText.textContent = `Total : ${total}€`;
+    }
+    function removeFromCart(index) {
+        cartItems.splice(index, 1);
+        saveCart();
+        updateCart();
+        showNotification('🗑️ Article retiré du panier.');
+    }
+    // --- Fonctions cookies ---
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    function getCookie(name) {
+        return document.cookie.split('; ').reduce((r, v) => {
+            const parts = v.split('=');
+            return parts[0] === name ? decodeURIComponent(parts[1]) : r
+        }, '');
+    }
+  // Affiche le bandeau si aucun choix n’a été fait
+    window.addEventListener('load', () => {
+        const consent = localStorage.getItem('cookieConsent');
+        if (consent !== 'accepted' && consent !== 'refused') {
+        document.getElementById('cookie-banner').classList.remove('hidden');
+        }
+    });
+
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
+
+    function refuseCookies() {
+        localStorage.setItem('cookieConsent', 'refused');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    
+    // Efface les cookies non essentiels et le panier
+        localStorage.removeItem('cartItems');
+        document.cookie = "cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+</script>
+<script>
+  window.onscroll = function() {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("progress-bar").style.width = scrolled + "%";
+  };
+</script>
+</body>
+</html>
